@@ -63,17 +63,21 @@
 do
     mime=$(file -b --mime-type "$f")
     if [[ "$mime" == image/* ]]; then
-        osascript \
-          -e 'use framework "AppKit"' \
-          -e 'use scripting additions' \
-          -e 'on run argv' \
-          -e 'set filePath to item 1 of argv' \
-          -e "set img to current application's NSImage's alloc()'s initWithContentsOfFile:filePath" \
-          -e "set pb to current application's NSPasteboard's generalPasteboard()" \
-          -e "pb's clearContents()" \
-          -e "pb's writeObjects:{img}" \
-          -e 'end run' \
-          -- "$f"
+        osascript - "$f" &lt;&lt;'APPLESCRIPT'
+use framework "AppKit"
+use scripting additions
+on run argv
+    set filePath to item 1 of argv
+    set img to current application's NSImage's alloc()'s initWithContentsOfFile:filePath
+    set tiffData to img's TIFFRepresentation()
+    set bitmapRep to current application's NSBitmapImageRep's imageRepWithData:tiffData
+    set pngData to bitmapRep's representationUsingType:(current application's NSBitmapImageFileTypePNG) |properties|:(missing value)
+    set pb to current application's NSPasteboard's generalPasteboard()
+    pb's clearContents()
+    pb's setData:pngData forType:"public.png"
+    pb's setData:tiffData forType:"public.tiff"
+end run
+APPLESCRIPT
     else
         cat "$f" | pbcopy
     fi
