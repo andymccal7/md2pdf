@@ -11,10 +11,6 @@
 	<key>NSServices</key>
 	<array>
 		<dict>
-			<key>NSBackgroundColorName</key>
-			<string>background</string>
-			<key>NSIconName</key>
-			<string>NSActionTemplate</string>
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
@@ -22,14 +18,16 @@
 			</dict>
 			<key>NSMessage</key>
 			<string>runWorkflowAsService</string>
+			<key>NSPortName</key>
+			<string>Convert MD to PDF</string>
 			<key>NSRequiredContext</key>
 			<dict>
 				<key>NSApplicationIdentifier</key>
 				<string>com.apple.finder</string>
 			</dict>
-			<key>NSSendFileTypes</key>
+			<key>NSSendTypes</key>
 			<array>
-				<string>net.daringfireball.markdown</string>
+				<string>NSFilenamesPboardType</string>
 			</array>
 		</dict>
 	</array>
