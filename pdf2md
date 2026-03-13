@@ -142,9 +142,13 @@ if [[ -f "/tmp/pdf2md-ocr-used" ]]; then
     rm -f "/tmp/pdf2md-ocr-used"
 fi
 
-# Load API key from config file if not already set
-if [[ -z "$ANTHROPIC_API_KEY" ]] && [[ -f "$HOME/.config/pdf2md/env" ]]; then
-    source "$HOME/.config/pdf2md/env"
+# Load API key if not already set
+if [[ -z "$ANTHROPIC_API_KEY" ]]; then
+    if [[ -f "$HOME/.config/pdf2md/env" ]]; then
+        source "$HOME/.config/pdf2md/env"
+    elif [[ -f "$HOME/.zshenv" ]]; then
+        eval "$(grep ANTHROPIC_API_KEY "$HOME/.zshenv")"
+    fi
 fi
 
 # LLM cleanup of extracted markdown
