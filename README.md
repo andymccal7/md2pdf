@@ -30,6 +30,8 @@ This installs:
 
 If `~/bin` is not in your PATH, the installer will show you how to add it.
 
+**Important:** After pulling updates or making changes to the scripts, you must re-run `./install.sh` to copy the updated scripts to `~/bin/` and refresh the Quick Actions.
+
 ## Usage
 
 ```
